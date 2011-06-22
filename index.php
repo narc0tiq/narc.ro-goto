@@ -9,6 +9,9 @@ define('PATH_ADODB', PATH_INC.'/adodb5');
 
 include(PATH_INC.'/conf.inc');
 include(PATH_ADODB.'/adodb.inc.php');
+include(PATH_INC.'/sql.inc');
+
+$sql = new GotoSQLEngine();
 
 $operation = '';
 if(!empty($_GET['args']))
