@@ -15,6 +15,9 @@ final class GotoSQLEngine
 
 		$this->db = ADONewConnection($conf['db_dsn']);
 
+		if(!empty($conf['db_debug']))
+			$this->db->debug = true;
+
 		if(empty($this->db))
 			die('Fatal error: could not connect to database!');
 	}
@@ -72,9 +75,6 @@ final class GotoSQLEngine
 		$limit += 0;
 		$offset += 0;
 
-		if(empty($this->db) and !$this->db_connect())
-			die('Unable to connect to database');
-
 		$q = 'SELECT keyword, url FROM redirects';
 		if(!empty($limit))
 			$q .= ' LIMIT '.$limit;
@@ -101,6 +101,17 @@ final class GotoSQLEngine
 			return true;
 	}
 
+	public function get_redirect($keyword)
+	{
+		$q = 'SELECT keyword, url FROM redirects WHERE keyword = ?';
+
+		$resu = $this->db->Execute($q, array($keyword));
+
+		if(empty($resu))
+			return array();
+		else
+			return $resu->GetAssoc();
+	}
 }
 
 ?>

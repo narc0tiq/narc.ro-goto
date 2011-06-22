@@ -5,8 +5,8 @@ $conf = array();
 $conf['db_is_file'] = true;
 $conf['db_fname'] = PATH_BASE.'/goto.sqlite.db';
 
-//$conf['db_dsn'] = 'sqlite://'.urlencode($conf['db_fname']).'?debug';
 $conf['db_dsn'] = 'sqlite://'.$conf['db_fname'];
+$conf['db_debug'] = false;
 
 // Regex that redirect names must match. Should be the same as the one in .htaccess
 $conf['filter_names'] = '/^[a-z0-9_-]{1,30}$/i';

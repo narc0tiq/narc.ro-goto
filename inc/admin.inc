@@ -1,7 +1,5 @@
 <?PHP
 
-//die('<pre>'.print_r($_SERVER, true));
-
 $errors = array();
 
 if(!empty($_POST['newname']))

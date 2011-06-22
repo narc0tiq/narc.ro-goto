@@ -18,6 +18,9 @@ $operation = '';
 if(!empty($_GET['args']))
 	$operation = $_GET['args'];
 
+if(strpos($operation, '/') > 0)
+	$operation = substr($operation, 0, strpos($operation, '/'));
+
 if(!$sql->redirects_table_exists()
    and !$sql->create_redirects_table())
 	die('Fatal error: could not create the redirects table.');
@@ -28,6 +31,15 @@ if(strtolower(substr($operation, 0, 5)) == 'admin')
 	exit(0);
 }
 
+$found = $sql->get_redirect($operation);
 
+if(empty($found))
+{
+	header('HTTP/1.x 404 Not Found');
+	echo fetch_header();
+	die('<p style="color: #b00">Fatal error: No such redirect: "'.$operation.'"</p>');
+}
+
+header('Location: '.$found[$operation]);
 
 ?>
