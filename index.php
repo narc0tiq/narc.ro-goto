@@ -10,6 +10,7 @@ define('PATH_ADODB', PATH_INC.'/adodb5');
 include(PATH_INC.'/conf.inc');
 include(PATH_ADODB.'/adodb.inc.php');
 include(PATH_INC.'/sql.inc');
+include(PATH_INC.'/strings.inc');
 
 $sql = new GotoSQLEngine();
 
@@ -26,4 +27,7 @@ if(strtolower(substr($operation, 0, 5)) == 'admin')
 	include(PATH_INC.'/admin.inc');
 	exit(0);
 }
+
+
+
 ?>
