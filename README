@@ -1,0 +1,3 @@
+Goto -- a simple redirector.
+
+This is a fast and simple (but not quick and dirty!) implementation of a redirector. Designed for personal use, it has a database backend (ADODB-mediated) and can be administered by a webmaster who needs a quick way to make a few short (or named) links without depending on the likes of tinyurl.
