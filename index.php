@@ -17,4 +17,9 @@ $operation = '';
 if(!empty($_GET['args']))
 	$operation = $_GET['args'];
 
+if(strtolower(substr($operation, 0, 5)) == 'admin')
+{
+	include(PATH_INC.'/admin.inc');
+	exit(0);
+}
 ?>
