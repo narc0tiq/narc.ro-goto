@@ -46,6 +46,61 @@ final class GotoSQLEngine
 			return false;
 	}
 
+	public function add_redirect($keyword, $url)
+	{
+		$q = 'INSERT INTO redirects (keyword, url) VALUES (?,?)';
+
+		$resu = $this->db->Execute($q, array($keyword, $url));
+
+		if(empty($resu))
+		{
+			$q = 'UPDATE redirects SET url = ? WHERE keyword = ?';
+
+			$resu = $this->db->Execute($q, array($url, $keyword));
+
+			if(!empty($resu))
+				return true;
+
+			return false;
+		}
+		else
+			return true;
+	}
+
+	public function get_redirects($limit = null, $offset = null)
+	{
+		$limit += 0;
+		$offset += 0;
+
+		if(empty($this->db) and !$this->db_connect())
+			die('Unable to connect to database');
+
+		$q = 'SELECT keyword, url FROM redirects';
+		if(!empty($limit))
+			$q .= ' LIMIT '.$limit;
+		if(!empty($offset))
+			$q .= ' OFFSET '.$offset;
+
+		$resu = $this->db->Execute($q);
+
+		if(empty($resu))
+			return array();
+		else
+			return $resu->GetAssoc();
+	}
+
+	public function delete_redirect($keyword)
+	{
+		$q = 'DELETE FROM redirects WHERE keyword = ?';
+
+		$resu = $this->db->Execute($q, array($keyword));
+
+		if(empty($resu))
+			return false;
+		else
+			return true;
+	}
+
 }
 
 ?>
