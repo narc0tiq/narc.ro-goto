@@ -2,6 +2,7 @@
 
 error_reporting(E_ALL);
 ob_start();
+session_start();
 
 define('PATH_BASE',  dirname(__FILE__));
 define('PATH_INC',   PATH_BASE.'/inc');
@@ -24,6 +25,10 @@ if(strpos($operation, '/') > 0)
 if(!$sql->redirects_table_exists()
    and !$sql->create_redirects_table())
 	die('Fatal error: could not create the redirects table.');
+
+if(!$sql->users_table_exists()
+   and !$sql->create_users_table())
+	die('Fatal error: could not create the users table.');
 
 if(strtolower(substr($operation, 0, 5)) == 'admin')
 {

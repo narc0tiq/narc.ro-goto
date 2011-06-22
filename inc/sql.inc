@@ -112,6 +112,97 @@ final class GotoSQLEngine
 		else
 			return $resu->GetAssoc();
 	}
-}
 
+	public function users_table_exists()
+	{
+		if(empty($this->cache['tables']))
+			$this->cache['tables'] = $this->db->MetaTables('TABLES');
+
+		if(in_array('users', $this->cache['tables']))
+			return true;
+		else
+			return false;
+	}
+
+	public function create_users_table()
+	{
+		$dict = NewDataDictionary($this->db);
+		$fields = '
+			username C(30) NOTNULL PRIMARY,
+			password_hash C(40) NOTNULL';
+
+		$sqlarray = $dict->CreateTableSQL('users', $fields);
+		$resu = $dict->ExecuteSQLArray($sqlarray);
+
+		if($resu > 0)
+			return true;
+		else
+			return false;
+	}
+
+	public function get_users($limit = null, $offset = null)
+	{
+		$limit += 0;
+		$offset += 0;
+
+		$q = 'SELECT username, password_hash FROM users';
+		if(!empty($limit))
+			$q .= ' LIMIT '.$limit;
+		if(!empty($offset))
+			$q .= ' OFFSET '.$offset;
+
+		$resu = $this->db->Execute($q);
+
+		if(empty($resu))
+			return array();
+		else
+			return $resu->GetAssoc();
+	}
+
+	public function add_user($username, $password_hash)
+	{
+		$q = 'INSERT INTO users (username, password_hash) VALUES (?,?)';
+
+		$resu = $this->db->Execute($q, array($username, $password_hash));
+
+		if(empty($resu))
+		{
+			$q = 'UPDATE redirects SET password_hash = ? WHERE username = ?';
+
+			$resu = $this->db->Execute($q, array($password_hash, $username));
+
+			if(!empty($resu))
+				return true;
+
+			return false;
+		}
+		else
+			return true;
+	}
+
+	public function delete_user($username)
+	{
+		$q = 'DELETE FROM users WHERE username = ?';
+
+		$resu = $this->db->Execute($q, array($username));
+
+		if(empty($resu))
+			return false;
+		else
+			return true;
+	}
+
+	public function get_user($username)
+	{
+		$q = 'SELECT username, password_hash FROM users WHERE username = ?';
+
+		$resu = $this->db->Execute($q, array($username));
+
+		if(empty($resu))
+			return array();
+		else
+			return $resu->GetAssoc();
+	}
+
+}
 ?>
