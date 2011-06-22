@@ -17,6 +17,10 @@ $operation = '';
 if(!empty($_GET['args']))
 	$operation = $_GET['args'];
 
+if(!$sql->redirects_table_exists()
+   and !$sql->create_redirects_table())
+	die('Fatal error: could not create the redirects table.');
+
 if(strtolower(substr($operation, 0, 5)) == 'admin')
 {
 	include(PATH_INC.'/admin.inc');
