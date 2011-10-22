@@ -35,6 +35,11 @@ if(strtolower(substr($operation, 0, 5)) == 'admin')
 	include(PATH_INC.'/admin.inc');
 	exit(0);
 }
+if(strtolower(substr($operation, 0, 4)) == 'list')
+{
+	include(PATH_INC.'/list.inc');
+	exit(0);
+}
 
 $found = $sql->get_redirect($operation);
 
