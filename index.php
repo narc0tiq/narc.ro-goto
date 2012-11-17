@@ -9,13 +9,14 @@ define('PATH_INC',   PATH_BASE.'/inc');
 define('PATH_ADODB', PATH_INC.'/adodb5');
 
 include(PATH_INC.'/conf.inc');
+include(PATH_ADODB.'/adodb-exceptions.inc.php');
 include(PATH_ADODB.'/adodb.inc.php');
 include(PATH_INC.'/sql.inc');
 include(PATH_INC.'/strings.inc');
 
 $sql = new GotoSQLEngine();
 
-$operation = '';
+$operation = 'list';
 if(!empty($_GET['args']))
 	$operation = $_GET['args'];
 

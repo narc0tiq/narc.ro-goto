@@ -3,9 +3,9 @@
 $conf = array();
 
 $conf['db_is_file'] = true;
-$conf['db_fname'] = PATH_BASE.'/goto.sqlite.db';
+$conf['db_fname'] = PATH_BASE.'/goto.sqlite3.db';
 
-$conf['db_dsn'] = 'sqlite://'.$conf['db_fname'];
+$conf['db_dsn'] = 'sqlite3://'.$conf['db_fname'];
 $conf['db_debug'] = false;
 
 // Regex that redirect names must match. Should be the same as the one in .htaccess

@@ -15,11 +15,11 @@ final class GotoSQLEngine
 
 		$this->db = ADONewConnection($conf['db_dsn']);
 
-		if(!empty($conf['db_debug']))
-			$this->db->debug = true;
-
 		if(empty($this->db))
 			die('Fatal error: could not connect to database!');
+
+		if(!empty($conf['db_debug']))
+			$this->db->debug = true;
 	}
 
 	public function redirects_table_exists()
